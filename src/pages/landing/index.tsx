@@ -1,6 +1,7 @@
+import { Heading1} from "../../components/common/typography/typography.component";
 import "./index.css";
 let textCenter:any={textAlign:"center"};
-import React from "react"
+import React, { Children } from "react"
 const LandingPage=()=>{
     let name:string="puspa saud";
     let email:string="puspasaud09@gmail.com";
@@ -9,13 +10,9 @@ const LandingPage=()=>{
     return (
         <React.Fragment>
             {/* <h1 style={{...textCenter}}>{name}</h1> */}
-            <h1 className="font-extrabold text-[28px] sm:text-[32px] md:text-[38px] lg:text-[42px] xl:text-[48px]">{name}</h1>
-            <h2 style={textCenter}> {email}</h2>
-            <em>{address}</em>
-            <br/>
-            <em>{phone}</em>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus delectus distinctio laboriosam inventore beatae iste error quisquam velit nulla.</p>
-        <hr/>
+              {/* <Heading1>Hello world</Heading1>  */}
+            {/* <Heading1 value="Puspa Saud"></Heading1>  for passing value to props*/ }
+          <Heading1 value="Puspa Saud"></Heading1>
         </React.Fragment>
     )
 }
