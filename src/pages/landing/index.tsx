@@ -13,6 +13,7 @@ const LandingPage=()=>{
               {/* <Heading1>Hello world</Heading1>  */}
             {/* <Heading1 value="Puspa Saud"></Heading1>  for passing value to props*/ }
           <Heading1 value="Puspa Saud"></Heading1>
+          <Heading1 className={'text-teal-600 text-center'} value={name}></Heading1>
         </React.Fragment>
     )
 }

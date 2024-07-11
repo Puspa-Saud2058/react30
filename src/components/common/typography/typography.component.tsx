@@ -4,10 +4,17 @@
 
 import { ReactElement } from "react";
 
+interface HeadingProps{
+    value:string|ReactElement,
+    className?:string|null|undefined,
+    children?:any
+}
+
 // export const Heading1 = ({children}:any) => {  //1 ways 
     // export const Heading1 = ({props}:any) => { //2 ways
         // export const Heading1 = (props:any) => { //3ways
-            export const Heading1 = ({value,className,children}:any) => {
+            // export const Heading1 = ({value,className,children}:any) => {
+                export const Heading1 = ({value,className,children}:HeadingProps) => {
         //receive
         //prepare
     return (
