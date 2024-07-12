@@ -10,16 +10,23 @@ let [loading,setLoading]=useState(true)
  //setLoading(false);
  //after renders
  useEffect(()=>{
-    console.log("I am always called whenever any state/props update/changes/create")
- })
+
+    return()=>{
+        console.log("I am always called whenever any state/props update/changes/create") 
+    }
+})
  useEffect(()=>{
-    console.log("I am  only called once when component is loaded")
+    return()=>{
+        console.log("I am  only called once when component is loaded")
     setLoading(false) 
+    }
 },[])
 
  useEffect(()=>{
+    return()=>{
+console.log("I am only called when the loading state is updated")
+    }
 //
-console.log("I am only called when the loading state is u")
  },[bannerData,loading])
     return(
 <>
