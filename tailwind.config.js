@@ -4,11 +4,13 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx,html}",
-    flowbite.content()
+    flowbite.content(),
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }
 
