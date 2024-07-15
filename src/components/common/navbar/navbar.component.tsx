@@ -1,87 +1,105 @@
 import { Navbar,MegaMenu } from "flowbite-react";
+import { NavLink } from "react-router-dom";
+
+const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})=>{
+  return(
+    <>
+      <NavLink to={link} className={({isActive}:{isActive:boolean})=>isActive?'text-cyan-800':'text-gray-700'+"hover:text-cyan-700"}>
+            {text} {icon}
+          </NavLink>
+    </>
+  )
+}
 const Navbars=()=>{
     return(
-        <Navbar fluid className="bg-slate-600" >
-        <Navbar.Brand  href="https://flowbite-react.com">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Flowbite React</span>
+        <Navbar fluid  rounded className="bg-gray-200 h-20 py-5 border-gray-200">
+        
+        <Navbar.Brand  href="/" className="mx-0 md:mx-6 lg:mx-10 xl:mx-16">
+        <span className="self-center whitespace-nowrap  font-semibold dark:text-white">Flowbite React</span>
         </Navbar.Brand>
-        <Navbar.Toggle />
+             <Navbar.Toggle />
         <Navbar.Collapse>
-          <Navbar.Link href="#" active>
-            Home
-          </Navbar.Link>
-          <Navbar.Link href="#">
-            About
-          </Navbar.Link>
-          <Navbar.Link href="#">Services</Navbar.Link>
+        <LinkComponent link="/" text="Home"/>
+        <LinkComponent link="/about" text="About"/>
+        <LinkComponent link="/service" text="Service"/>
           <Navbar.Link href="#">
           <MegaMenu.Dropdown toggle={<>Contact</>}>
            <ul className="grid grid-cols-3">
              <div className="space-y-4 p-4">
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   About Us
+                 <LinkComponent link="/about" text="About us"/>
                  </a>
                </li>
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Library
+                 <LinkComponent link="/library" text="Library"/>
                  </a>
                </li>
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Resources
+                 <LinkComponent link="/resources" text="Resources"/>
                  </a>
                </li>
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Pro Version
-                 </a>
-               </li>
-             </div>
-             <div className="space-y-4 p-4">
-               <li>
-                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Contact Us
-                 </a>
-               </li>
-               <li>
-                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Support Center
-                 </a>
-               </li>
-               <li>
-                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Terms
-                 </a>
-               </li>
-               <li>
-                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Blog
+                 
+                   <LinkComponent link="/pro-version" text="  Pro Version"/>
                  </a>
                </li>
              </div>
              <div className="space-y-4 p-4">
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Newsletter
+                 
+                   <LinkComponent link="/contact-us" text="Contact Us"/>
                  </a>
                </li>
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   Playground
+                 
+                   <LinkComponent link="/support-center" text="Support Center"/>
                  </a>
                </li>
                <li>
                  <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
-                   License
+               
+                   <LinkComponent link="/terms" text="Terms"/>
+                 </a>
+               </li>
+               <li>
+                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
+                  <LinkComponent link="/blog" text="Blog"/>
+                 </a>
+               </li>
+             </div>
+             <div className="space-y-4 p-4">
+               <li>
+                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
+                  
+                   <LinkComponent link="/ newsletter" text=" Newsletter"/>
+                 </a>
+               </li>
+               <li>
+                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
+                   
+                   <LinkComponent link="/playground" text="Playground"/>
+                 </a>
+               </li>
+               <li>
+                 <a href="#" className="hover:text-primary-600 dark:hover:text-primary-500">
+                 <LinkComponent link="/license" text="License"/>
                  </a>
                </li>
              </div>
            </ul>
          </MegaMenu.Dropdown>
           </Navbar.Link>
-          <Navbar.Link href="#">Pricing</Navbar.Link>
+          <LinkComponent link="/pricing" text="Pricing"/>
+        </Navbar.Collapse>
+        <Navbar.Collapse>
+        <LinkComponent link="/register" icon="&rarr;" text="Register"/>
+        <LinkComponent link="/login" icon="&rarr;" text="Login"/>
         </Navbar.Collapse>
       </Navbar>
     )
