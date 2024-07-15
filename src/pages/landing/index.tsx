@@ -1,10 +1,10 @@
 import Cards from "../../components/common/card/card.comonent"
 import "./index.css";
 import "flowbite";
-import Navbars from "../../components/common/navbar/navbar.component";
 import { HomePageBanner } from "../../components/banner/banner.component";
 import SingleProductComponent from "../../components/product/single-product.component";
 import HomePageTitle from "../../components/common/title/home-title.component";
+import HomeFooter from "../../components/common/footer/footer";
 const LandingPage = () => {
   return (
     // <React.Fragment>
@@ -16,8 +16,7 @@ const LandingPage = () => {
 
     // </React.Fragment>
     <>
-      <Navbars />
-      <HomePageBanner />
+           <HomePageBanner />
       <HomePageTitle title="Categories" url="/categories"/>
       <div className=" md:flex lg:flex sm:grid-cols-1 mx-3 md:mx-20 py-5 gap-2 mt-5">
  
@@ -37,22 +36,7 @@ const LandingPage = () => {
           <SingleProductComponent key={i} />
         ))}
       </div>
-      <footer className="bg-slate-300 h-40 mt-10 py-3 content-center">
-        <p className="text-center">
-          <span className="mx-3">&copy; Al rights reserved.</span>
-          <span className="px-2">
-            Design and Developed by
-            <a
-              className=" mx-3 text-teal-800 hover:cursor-pointer"
-              target="_blank"
-              href="https://Appharu.com"
-            >
-              {" "}
-              App haru
-            </a>
-          </span>
-        </p>
-      </footer>
+    <HomeFooter/>
     </>
   );
 };
