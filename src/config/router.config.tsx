@@ -6,6 +6,7 @@ import NotFound from "../pages/errors/not-found-page";
 import CategoryDetailPage from "../pages/category/category-detail.page";
 import HomePageLayout from "../pages/layouts/home-layout.page";
 import AdminPageLayout from "../pages/layouts/admin-layout.page";
+import AdminDashboard from "../pages/dashboard/admin-dashboard.component";
 
 const RouterConfig = () => {
   return (
@@ -18,7 +19,9 @@ const RouterConfig = () => {
           <Route path="category/:slug" element={<CategoryDetailPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-        <Route path="/admin" element={<AdminPageLayout/>}></Route>
+        <Route path="/admin" element={<AdminPageLayout/>}>
+         <Route index element={<AdminDashboard/>}></Route>
+         </Route>
       </Routes>
     </BrowserRouter>
   );
