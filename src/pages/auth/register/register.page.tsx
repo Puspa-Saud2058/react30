@@ -1,23 +1,27 @@
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import image from "../../../assests/image/image.jpeg"
-
+import { NavLink } from "react-router-dom";
+import image from "../../../assests/image/image.jpeg";
+import { BaseSyntheticEvent, useState } from "react";
+import { TextInputComponent } from "../../../components/common/form/input.component";
+import {
+  handleChangeType,
+  INPUT_TYPE,
+} from "../../../components/common/form/input.contract";
+import { InputLabel } from "../../../components/common/form/label.component";
 const RegisterPage = () => {
-  const navigate = useNavigate();
-  const submitEvent = (data: any) => {
-    //api integration
-    //response
-    //success=>notify
-    navigate("/admin");
+  const [data, setData] = useState({}); //store data
+
+  const handleChange = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    const value = e.target.value;
+    const name = e.target.name;
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
+  console.log(data);
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
       <section className="bg-white">
         <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
           <section className="relative flex h-28 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
@@ -28,7 +32,6 @@ const RegisterPage = () => {
             />
 
             <div className="hidden lg:relative lg:block lg:p-12">
-             
               <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
                 Welcome to Ecommerce
               </h2>
@@ -71,132 +74,110 @@ const RegisterPage = () => {
               </div>
 
               <form action="#" className="mt-8 grid grid-cols-6 gap-6">
-              <div className="col-span-6">
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Name{" "}
-                  </label>
+                <div className="col-span-6">
+                <InputLabel htmlFor="name">Name</InputLabel>
 
-                  <input
-                    type="text"
-                    id="name"
+                  <TextInputComponent
                     name="name"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    handleChange={handleChange as handleChangeType}
                   />
                 </div>
 
                 <div className="col-span-6">
-                  <label
-                    htmlFor="Email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Email{" "}
-                  </label>
+                <InputLabel htmlFor="email">Email</InputLabel>
 
-                  <input
-                    type="email"
-                    id="Email"
+                  <TextInputComponent
                     name="email"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    type={INPUT_TYPE.EMAIL}
+                    handleChange={handleChange as handleChangeType}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="Password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Password{" "}
-                  </label>
-
-                  <input
-                    type="password"
-                    id="Password"
+                <InputLabel htmlFor="password">Password</InputLabel>
+                  <TextInputComponent
                     name="password"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    type={INPUT_TYPE.PASSWORD}
+                    handleChange={handleChange as handleChangeType}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="PasswordConfirmation"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Password Confirmation
-                  </label>
-
-                  <input
-                    type="password"
-                    id="PasswordConfirmation"
+                 <InputLabel htmlFor="PasswordConfirmation">Password Confirmation</InputLabel>
+                  <TextInputComponent
                     name="password_confirmation"
-                    className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                    type={INPUT_TYPE.EMAIL}
+                    handleChange={handleChange as handleChangeType}
                   />
                 </div>
                 <div className="col-span-6">
-                  <label
-                    htmlFor="address"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Address{" "}
-                  </label>
-
+                 <InputLabel htmlFor="address">Address</InputLabel>
                   <textarea
                     id="address"
                     name="address"
+                    onChange={handleChange}
                     rows={4}
-                    className="resize-none mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
-                      </textarea>
+                    className="resize-none mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  ></textarea>
                 </div>
                 <div className="col-span-6">
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Phone_no{" "}
-                  </label>
-
-                  <input
-                  type="tel"
-                    id="phone"
+                <InputLabel htmlFor="phone">Phone_no</InputLabel>
+                  <TextInputComponent
                     name="phone"
-                    className=" mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"/>
-                    
-                </div>   
-                 <div className="col-span-6">
-                  <label
-                    htmlFor="role"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    {" "}
-                    Role{" "}
-                  </label>
-
+                    type={INPUT_TYPE.TEL}
+                    handleChange={handleChange as handleChangeType}
+                  />
+                </div>
+                <div className="col-span-6">
+                  <InputLabel htmlFor="role">Role</InputLabel> 
                   <select
                     id="role"
                     name="role"
-                    className=" mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
-                      <option value="Customer">Buyer</option>
-                      <option value="seller">Seller</option>
-                      </select>
-                    
+                    onChange={handleChange}
+                    className=" mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                  >
+                    <option value="Customer">Buyer</option>
+                    <option value="seller">Seller</option>
+                  </select>
+                </div>
+                <div className="col-span-6">
+                <InputLabel htmlFor="default_size">Image</InputLabel>
+                  <input
+                    className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    id="default_size"
+                    type="file"
+                    name="image"
+                    accept="image/*"
+                    onChange={(e: BaseSyntheticEvent) => {
+                      e.preventDefault();
+                      const name = e.target.name;
+                      //{"0":{file}}=>single uplaod
+                      //{"0":{file},"1":{file}}=>[{file},{file}]=>multipule upload
+                      //object.values(e.target.files)=>[{files}]
+                      const image = e.target.files[0];
+                      setData({
+                        ...data,
+                        [name]: image,
+                      });
+                    }}
+                  />
                 </div>
 
-                  <div className="col-span-6">
+                <div className="col-span-6">
                   <p className="text-sm text-gray-500">
                     By creating an account, you agree to our
-                    <NavLink to="/terms-and -condition" className="text-gray-700 underline">
+                    <NavLink
+                      to="/terms-and -condition"
+                      className="text-gray-700 underline"
+                    >
                       {" "}
                       terms and conditions{" "}
                     </NavLink>
                     and
-                    <NavLink to="/privacy-policy" className="text-gray-700 underline">
+                    <NavLink
+                      to="/privacy-policy"
+                      className="text-gray-700 underline"
+                    >
                       privacy policy
                     </NavLink>
                     .
@@ -204,11 +185,10 @@ const RegisterPage = () => {
                 </div>
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                  <button 
-                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
-                  type="submit"
+                  <button
+                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                    type="submit"
                   >
-                   
                     Create an account
                   </button>
 
