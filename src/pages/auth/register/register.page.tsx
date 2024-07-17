@@ -1,25 +1,16 @@
 import { NavLink } from "react-router-dom";
 import image from "../../../assests/image/image.jpeg";
-import { BaseSyntheticEvent, useState } from "react";
-import { TextInputComponent } from "../../../components/common/form/input.component";
-import {
-  handleChangeType,
-  INPUT_TYPE,
-} from "../../../components/common/form/input.contract";
+import { BaseSyntheticEvent } from "react";
+import { RoleSelectComponents, TextAreaInputComponents, TextInputComponent } from "../../../components/common/form/input.component";
+import {INPUT_TYPE} from "../../../components/common/form/input.contract";
 import { InputLabel } from "../../../components/common/form/label.component";
+import { useForm } from "react-hook-form";
 const RegisterPage = () => {
-  const [data, setData] = useState({}); //store data
-
-  const handleChange = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    const value = e.target.value;
-    const name = e.target.name;
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
-  console.log(data);
+  const {register,handleSubmit,setValue,formState:{errors}}=useForm()
+  const submitEvent=(data:any)=>{
+    //TODO:API CALL
+    console.log(data);
+  }
   return (
     <>
       <section className="bg-white">
@@ -43,7 +34,7 @@ const RegisterPage = () => {
           </section>
 
           <main className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
-            <div className="max-w-xl lg:max-w-3xl">
+            <div className="max-w-2xl lg:w-full">
               <div className="relative -mt-16 block lg:hidden">
                 <a
                   className="inline-flex size-16 items-center justify-center rounded-full bg-white text-blue-600 sm:size-20"
@@ -73,13 +64,14 @@ const RegisterPage = () => {
                 </p>
               </div>
 
-              <form action="#" className="mt-8 grid grid-cols-6 gap-6">
+              <form onSubmit={handleSubmit(submitEvent)} className="mt-8 grid grid-cols-6 gap-6">
                 <div className="col-span-6">
                 <InputLabel htmlFor="name">Name</InputLabel>
 
                   <TextInputComponent
                     name="name"
-                    handleChange={handleChange as handleChangeType}
+                    register={register}
+                    msg={(errors?.name?"Name is required":"")}
                   />
                 </div>
 
@@ -89,7 +81,9 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="email"
                     type={INPUT_TYPE.EMAIL}
-                    handleChange={handleChange as handleChangeType}
+                    msg={(errors?.name?"Email is required":"")}
+                   register={register}
+                 
                   />
                 </div>
 
@@ -98,7 +92,8 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="password"
                     type={INPUT_TYPE.PASSWORD}
-                    handleChange={handleChange as handleChangeType}
+                    msg={(errors?.name?"Password is required":"")}
+                    register={register}
                   />
                 </div>
 
@@ -107,38 +102,34 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="password_confirmation"
                     type={INPUT_TYPE.EMAIL}
-                    handleChange={handleChange as handleChangeType}
+                    msg={(errors?.name?"Password Confirmation is required":"")}
+                    register={register}
                   />
                 </div>
                 <div className="col-span-6">
                  <InputLabel htmlFor="address">Address</InputLabel>
-                  <textarea
-                    id="address"
-                    name="address"
-                    onChange={handleChange}
-                    rows={4}
-                    className="resize-none mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  ></textarea>
+                 <TextAreaInputComponents 
+                 name="address"
+                 register={register}
+                 msg={(errors?.address?"Address is required":"")}
+                 />
                 </div>
                 <div className="col-span-6">
                 <InputLabel htmlFor="phone">Phone_no</InputLabel>
                   <TextInputComponent
                     name="phone"
                     type={INPUT_TYPE.TEL}
-                    handleChange={handleChange as handleChangeType}
+                    msg={(errors?.name?"Phone_no is required":"")}
+                    register={register}
                   />
                 </div>
                 <div className="col-span-6">
                   <InputLabel htmlFor="role">Role</InputLabel> 
-                  <select
-                    id="role"
-                    name="role"
-                    onChange={handleChange}
-                    className=" mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-                  >
-                    <option value="Customer">Buyer</option>
-                    <option value="seller">Seller</option>
-                  </select>
+                  <RoleSelectComponents 
+                  name="role" 
+                  msg={(errors.role?"Role is required":"")}
+                  register={register}
+                  />
                 </div>
                 <div className="col-span-6">
                 <InputLabel htmlFor="default_size">Image</InputLabel>
@@ -155,10 +146,8 @@ const RegisterPage = () => {
                       //{"0":{file},"1":{file}}=>[{file},{file}]=>multipule upload
                       //object.values(e.target.files)=>[{files}]
                       const image = e.target.files[0];
-                      setData({
-                        ...data,
-                        [name]: image,
-                      });
+                      setValue(name,image)
+                    
                     }}
                   />
                 </div>
