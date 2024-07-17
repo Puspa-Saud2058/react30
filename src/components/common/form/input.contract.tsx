@@ -13,8 +13,8 @@ export type handleChangeType=(e:BaseSyntheticEvent)=>{}
 export interface ITextInputComponent{
     type?:INPUT_TYPE,
     name:string,
-    register:any,
-    //handleChange:handleChangeType,
+    defaultValue?:string,
+    control:any,
     msg?:string|undefined|null
 }
 

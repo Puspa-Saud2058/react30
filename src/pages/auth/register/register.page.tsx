@@ -1,12 +1,12 @@
 import { NavLink } from "react-router-dom";
 import image from "../../../assests/image/image.jpeg";
 import { BaseSyntheticEvent } from "react";
-import { RoleSelectComponents, TextAreaInputComponents, TextInputComponent } from "../../../components/common/form/input.component";
+import { RoleSelector, TextAreaInputComponents, TextInputComponent } from "../../../components/common/form/input.component";
 import {INPUT_TYPE} from "../../../components/common/form/input.contract";
 import { InputLabel } from "../../../components/common/form/label.component";
 import { useForm } from "react-hook-form";
 const RegisterPage = () => {
-  const {register,handleSubmit,setValue,formState:{errors}}=useForm()
+  const {control,handleSubmit,setValue,formState:{errors}}=useForm()
   const submitEvent=(data:any)=>{
     //TODO:API CALL
     console.log(data);
@@ -70,7 +70,7 @@ const RegisterPage = () => {
 
                   <TextInputComponent
                     name="name"
-                    register={register}
+                    control={control}
                     msg={(errors?.name?"Name is required":"")}
                   />
                 </div>
@@ -81,8 +81,8 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="email"
                     type={INPUT_TYPE.EMAIL}
-                    msg={(errors?.name?"Email is required":"")}
-                   register={register}
+                    msg={(errors?.email?"Email is required":"")}
+                   control={control}
                  
                   />
                 </div>
@@ -92,8 +92,8 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="password"
                     type={INPUT_TYPE.PASSWORD}
-                    msg={(errors?.name?"Password is required":"")}
-                    register={register}
+                    msg={(errors?.password?"Password is required":"")}
+                    control={control}
                   />
                 </div>
 
@@ -102,16 +102,16 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="password_confirmation"
                     type={INPUT_TYPE.EMAIL}
-                    msg={(errors?.name?"Password Confirmation is required":"")}
-                    register={register}
+                    msg={(errors?.password_confirmation?"Password Confirmation is required":"")}
+                    control={control}
                   />
                 </div>
                 <div className="col-span-6">
                  <InputLabel htmlFor="address">Address</InputLabel>
                  <TextAreaInputComponents 
                  name="address"
-                 register={register}
-                 msg={(errors?.address?"Address is required":"")}
+                 control={control}
+                 msg={errors?.address?"Address is required":""}
                  />
                 </div>
                 <div className="col-span-6">
@@ -119,16 +119,17 @@ const RegisterPage = () => {
                   <TextInputComponent
                     name="phone"
                     type={INPUT_TYPE.TEL}
-                    msg={(errors?.name?"Phone_no is required":"")}
-                    register={register}
+                    msg={(errors?.phone?"Phone_no is required":"")}
+                    control={control}
                   />
                 </div>
                 <div className="col-span-6">
                   <InputLabel htmlFor="role">Role</InputLabel> 
-                  <RoleSelectComponents 
-                  name="role" 
-                  msg={(errors.role?"Role is required":"")}
-                  register={register}
+                  <RoleSelector
+                  control={control}
+                  name="role"
+                  msg={(errors?.role?"Role is required":"")}
+                  
                   />
                 </div>
                 <div className="col-span-6">
