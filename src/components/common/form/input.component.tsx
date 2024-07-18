@@ -47,7 +47,7 @@ export const TextAreaInputComponents = ({
         id={name}
         rows={4}
         {...field}
-        className="resize-none mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+        className="resize-none mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm "
       ></textarea>
       <span className="text-sm italic text-red-700">{msg}</span>
     </>

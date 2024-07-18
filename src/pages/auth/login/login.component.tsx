@@ -2,41 +2,50 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import *as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { TextInputComponent } from "../../../components/common/form/input.component";
+import { INPUT_TYPE } from "../../../components/common/form/input.contract";
 const LoginPage=()=>{
     const loginDTO=Yup.object({
         email: Yup.string().email({ tlds: { allow: ['com'] } }).required(),
-        password:Yup.string().matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,25}$/, "Password must contain one lowercase, one uppercase, one special character, and a digit and must be of length 8 to 25 characters"),
-        
+        password:Yup.string().required()        
     });
     const {control,handleSubmit,formState:{errors}}=useForm({
       resolver:yupResolver(loginDTO)
     })
-    const submitEvent=(data:any)=>{
+    const loginAction=(data:any)=>{
       //TODO:API CALL
       console.log(data);
     }
     return(
         <>
     
-    <form  onSubmit={handleSubmit(submitEvent)} className="flex max-w-md flex-col gap-4 mx-36">
-      <div>
-        <div className="mb-2 block ">
-          <Label htmlFor="email1" value="Your email" />
+    <div className="flex justify-center items-center mt-16 ">
+            <form onSubmit={handleSubmit(loginAction)} className="">
+                <div className="w-full lg:w-96 md:w-64 sm:w-48 " >
+                    <Label htmlFor="email1" value="Email" className="block mb-2" />
+                    <TextInputComponent
+                    control={control}
+                    name="email"
+                    type={INPUT_TYPE.EMAIL}
+                    msg={errors?.email?.message}
+                    />
+                </div>
+                <div className="w-full lg:w-96 md:w-64 sm:w-48 " >
+
+                    <Label htmlFor="password1" value="Password" className="block mb-2 py-2" />
+                    <TextInputComponent
+                    control={control}
+                    name="password"
+                    type={INPUT_TYPE.PASSWORD}
+                    msg={errors?.password?.message}
+                                     
+                    />
+                 
+                </div>
+               
+                <Button className="w-32 mt-3 mb-5" type="submit">Submit</Button>
+            </form>
         </div>
-        <TextInput id="email1" type="email" placeholder="name@flowbite.com" required />
-      </div>
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="password1" value="Your password" />
-        </div>
-        <TextInput id="password1" type="password" required />
-      </div>
-      <div className="flex items-center gap-2">
-        <Checkbox id="remember" />
-        <Label htmlFor="remember">Remember me</Label>
-      </div>
-      <Button type="submit">Submit</Button>
-    </form>
         </>
     )
 }

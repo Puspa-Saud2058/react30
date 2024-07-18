@@ -28,3 +28,17 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+######
+google login
+====>
+web Google login button
+//within google domain
+  ===>popup (consent screen)
+   ===>login(username,password)
+     ==>scope confirm 
+      ==>confirm,cancel
+      ==>confirm===>redirected to redirect url ===>response
+      ===>call an api to register your data
+  

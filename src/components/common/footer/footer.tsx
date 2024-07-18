@@ -12,7 +12,7 @@ const HomeFooter=()=>{
               href="https://Appharu.com"
             >
               {" "}
-              App haru
+              Puspa
             </a>
           </span>
         </p>
