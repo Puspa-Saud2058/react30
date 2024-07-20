@@ -36,7 +36,7 @@ const LandingPage = () => {
           <SingleProductComponent key={i} />
         ))}
       </div>
-    <HomeFooter/>
+
     </>
   );
 };

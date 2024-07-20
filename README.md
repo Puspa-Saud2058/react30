@@ -41,4 +41,8 @@ web Google login button
       ==>confirm,cancel
       ==>confirm===>redirected to redirect url ===>response
       ===>call an api to register your data
-  
+  ### XHMLHttpRequest(XHR)
+  ->fetch,maintained by node js
+  ->axios
+  ->XMLHttpRequest
+
