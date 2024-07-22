@@ -1,27 +1,52 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import image from "../../../assests/image/image.jpeg";
-import { BaseSyntheticEvent } from "react";
-import { RoleSelector, TextAreaInputComponents, TextInputComponent } from "../../../components/common/form/input.component";
-import {INPUT_TYPE} from "../../../components/common/form/input.contract";
+import { BaseSyntheticEvent, useState } from "react";
+import {
+  RoleSelector,
+  TextAreaInputComponents,
+  TextInputComponent,
+} from "../../../components/common/form/input.component";
+import { INPUT_TYPE } from "../../../components/common/form/input.contract";
 import { InputLabel } from "../../../components/common/form/label.component";
 import { useForm } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import authSvc from "../auth.service";
+import {toast} from "react-toastify";
+
 
 const RegisterPage = () => {
-  const registrationDTO=authSvc.registerUserDto()
-  const {control,handleSubmit,setValue,formState:{errors}}=useForm({
-    resolver:yupResolver(registrationDTO)
-  })
-  const submitEvent=async(data:any)=>{
-   try{
-       const response=await authSvc.postRequest('/auth/register',data,{file:true});
-   }catch(exception){
-    //handling
-    console.log(exception)
-   }
-  }
+  const registrationDTO = authSvc.registerUserDto();
+  const [loading,setLoading]=useState(false);
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    setError,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registrationDTO),
+  });
+  const navigate=useNavigate();
+  const submitEvent = async (data: any) => {
+    setLoading(true)
+    try {
+     const response = await authSvc.postRequest("/auth/register", data, {file: true});
+     toast.success(response.message);
+      navigate('/login');
+    } catch (exception: any) {
+      //handling
+      if (+exception.status === 422) {
+        //null
+        Object.keys(exception.data.result).map((field: any) => {
+          setError(field, {message:exception.data.result[field]});
+        });
+      }
+      toast.error(exception.data.message)
+    }finally{
+      setLoading(false);
+    }
+  };
   return (
     <>
       <section className="bg-white">
@@ -75,76 +100,79 @@ const RegisterPage = () => {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit(submitEvent)} className="mt-8 grid grid-cols-6 gap-6">
+              <form
+                onSubmit={handleSubmit(submitEvent)}
+                className="mt-8 grid grid-cols-6 gap-6"
+              >
                 <div className="col-span-6">
-                <InputLabel htmlFor="name">Name</InputLabel>
+                  <InputLabel htmlFor="name">Name</InputLabel>
 
                   <TextInputComponent
                     name="name"
                     control={control}
-                    msg={(errors?.name?.message)}
+                    msg={errors?.name?.message}
                   />
                 </div>
 
                 <div className="col-span-6">
-                <InputLabel htmlFor="email">Email</InputLabel>
+                  <InputLabel htmlFor="email">Email</InputLabel>
 
                   <TextInputComponent
                     name="email"
                     type={INPUT_TYPE.EMAIL}
-                    msg={(errors?.email?.message)}
-                   control={control}
-                 
+                    msg={errors?.email?.message}
+                    control={control}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                <InputLabel htmlFor="password">Password</InputLabel>
+                  <InputLabel htmlFor="password">Password</InputLabel>
                   <TextInputComponent
                     name="password"
                     type={INPUT_TYPE.PASSWORD}
-                    msg={(errors?.password?.message)}
+                    msg={errors?.password?.message}
                     control={control}
                   />
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
-                 <InputLabel htmlFor="PasswordConfirmation">Password Confirmation</InputLabel>
+                  <InputLabel htmlFor="PasswordConfirmation">
+                    Password Confirmation
+                  </InputLabel>
                   <TextInputComponent
                     name="confirmPassword"
                     type={INPUT_TYPE.PASSWORD}
-                    msg={(errors?.confirmPassword?.message)}
+                    msg={errors?.confirmPassword?.message}
                     control={control}
                   />
                 </div>
                 <div className="col-span-6">
-                 <InputLabel htmlFor="address">Address</InputLabel>
-                 <TextAreaInputComponents 
-                 name="address"
-                 control={control}
-                 msg={errors?.address?.message}
-                 />
+                  <InputLabel htmlFor="address">Address</InputLabel>
+                  <TextAreaInputComponents
+                    name="address"
+                    control={control}
+                    msg={errors?.address?.message}
+                  />
                 </div>
                 <div className="col-span-6">
-                <InputLabel htmlFor="phone">Phone_no</InputLabel>
+                  <InputLabel htmlFor="phone">Phone_no</InputLabel>
                   <TextInputComponent
                     name="phone"
                     type={INPUT_TYPE.TEL}
-                    msg={(errors?.phone?.message)}
+                    msg={errors?.phone?.message}
                     control={control}
                   />
                 </div>
                 <div className="col-span-6">
-                  <InputLabel htmlFor="role">Role</InputLabel> 
+                  <InputLabel htmlFor="role">Role</InputLabel>
                   <RoleSelector
-                  control={control}
-                  name="role"
-                  msg={(errors?.role?.message)}
-                  
+                    control={control}
+                    name="role"
+                    msg={errors?.role?.message}
                   />
                 </div>
                 <div className="col-span-6">
-                <InputLabel htmlFor="default_size">Image</InputLabel>
+                  <InputLabel htmlFor="default_size">Image</InputLabel>
                   <input
                     className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id="default_size"
@@ -158,11 +186,12 @@ const RegisterPage = () => {
                       //{"0":{file},"1":{file}}=>[{file},{file}]=>multipule upload
                       //object.values(e.target.files)=>[{files}]
                       const image = e.target.files[0];
-                      setValue(name,image)
-                    
+                      setValue(name, image);
                     }}
                   />
-                  <span className="text-sm italic text-red-700">{errors?.image?.message as string}</span>
+                  <span className="text-sm italic text-red-700">
+                    {errors?.image?.message as string}
+                  </span>
                 </div>
 
                 <div className="col-span-6">
@@ -188,8 +217,9 @@ const RegisterPage = () => {
 
                 <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
                   <button
-                    className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                    className="inline-block shrink-0 rounded-md border disabled:cursor-not-allowed border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                     type="submit"
+                    disabled={loading}
                   >
                     Create an account
                   </button>

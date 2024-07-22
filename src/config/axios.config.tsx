@@ -18,12 +18,12 @@ const axiosInstance=axios.create({
 //TODO 
 axiosInstance.interceptors.response.use(
     (response)=>{
-        console.log("Success Interceptor",response)
-        return response;
+        
+        return response.data;
     },
     (exception)=>{
-        console.log("Error Interceptor",exception)
-        throw exception
+        
+        throw exception.response
     }
 )
 
