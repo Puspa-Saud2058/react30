@@ -1,4 +1,3 @@
-import axios from "axios";
 import axiosInstance from "../config/axios.config";
 
 abstract class HttpService {
@@ -10,22 +9,15 @@ abstract class HttpService {
       this.headers = {
         ...this.headers,
         "Content-Type": "multipart/form-data",
-      };
+      }
     }
     //query string
   };
-  postRequest = async (
-    url: string,
-    data: any = {},
-    config: any = null
-  ): Promise<any> => {
+  postRequest = async (url: string,data: any = {},config: any = null): Promise<any> => {
     try {
       this.getHeaders(config);
       const response = await axiosInstance.post(url, data, {
-        headers: {
-            ...this.headers
-        },
-        
+        headers: {...this.headers },        
       });
       console.log(response)
     } catch (exception) {

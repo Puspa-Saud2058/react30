@@ -2,7 +2,7 @@ import axios from "axios";
 //http://localhost:9005/
 //auth/register./auth/login
 const axiosInstance=axios.create({
-    baseURL:import.meta.env.VITE_APP_URL,
+    baseURL:import.meta.env.VITE_API_URL,
     timeout:60000,
     timeoutErrorMessage:"Server timed out",
     headers:{

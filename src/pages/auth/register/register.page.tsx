@@ -111,8 +111,8 @@ const RegisterPage = () => {
                 <div className="col-span-6 sm:col-span-3">
                  <InputLabel htmlFor="PasswordConfirmation">Password Confirmation</InputLabel>
                   <TextInputComponent
-                    name="password_confirmation"
-                    type={INPUT_TYPE.EMAIL}
+                    name="confirmPassword"
+                    type={INPUT_TYPE.PASSWORD}
                     msg={(errors?.confirmPassword?.message)}
                     control={control}
                   />
@@ -210,4 +210,5 @@ const RegisterPage = () => {
     </>
   );
 };
+
 export default RegisterPage;
