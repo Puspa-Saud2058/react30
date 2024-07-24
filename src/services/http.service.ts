@@ -20,7 +20,7 @@ abstract class HttpService {
       }
     }
     //query string
-    if(config && config.params){
+    if(config && config.auth){
       this.params={
         ...this.params,
         ...config.params
@@ -40,7 +40,19 @@ abstract class HttpService {
       throw exception;
     }
   };
-  getRequest = async (url: string, config: any = null) => {};
+  getRequest = async (url: string, config: any = null) => {
+    try{
+     this.getHeaders(config);
+     const response=await axiosInstance.get(url,{
+      headers:{...this.headers},
+      params:{...this.params}
+     })
+     return response
+    }catch(exception){
+      console.log("GetRequestException",exception)
+      throw exception
+    }
+  };
   putRequest = async (url: string, data: any = {}, config: any = null) => {};
   patchRequest = async (url: string, data: any = {}, config: any = null) => {};
   deleteRequest = async (url: string, config: any = null) => {};

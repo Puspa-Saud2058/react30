@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import authSvc from "../auth.service";
 import {toast} from "react-toastify";
+import { GoogleLogin } from "@react-oauth/google";
 
 
 const RegisterPage = () => {
@@ -233,6 +234,15 @@ const RegisterPage = () => {
                   </p>
                 </div>
               </form>
+              <GoogleLogin
+              onSuccess={credentialResponse=>{
+                console.log(credentialResponse);
+              }}
+              onError={()=>{
+                console.log('Login Failed');
+              }}           
+              
+              />
             </div>
           </main>
         </div>

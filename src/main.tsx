@@ -14,6 +14,7 @@ rootElem.render(
   <RouterConfig/>
   {/* <About/>
   <LoginPage/> */}
-</React.StrictMode>
+  </React.StrictMode>
+
 
 )

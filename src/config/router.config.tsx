@@ -15,10 +15,12 @@ import "react-toastify/ReactToastify.css";
 // import AdminPageLayout from "../pages/layouts/admin-layout.page";
 import { HomePageLayout,AdminPageLayout } from "../pages/layouts";
 import AdminDashboard from "../pages/dashboard/admin-dashboard.component";
+import {GoogleOAuthProvider} from '@react-oauth/google';
 
 const RouterConfig = () => {
   return (
     <>
+ <GoogleOAuthProvider clientId="983346421278-m6oju1bpo115p7um94rfdgkj7amgubp7.apps.googleusercontent.com">
     <ToastContainer
      theme="colored"/> 
        
@@ -37,6 +39,7 @@ const RouterConfig = () => {
          </Route>
       </Routes>
     </BrowserRouter>
+    </GoogleOAuthProvider>
     </>
   );
 };
