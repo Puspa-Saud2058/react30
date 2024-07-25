@@ -21,7 +21,6 @@ const ActivationPage = () => {
         +exception.status === 400 && exception.data.result && exception.data.result.hasOwnProperty('token') &&
         exception.data.result.token === "expired"
       )
-
        {
         setMsg(
           "Your token has been expired.Please confirm resending the token."
