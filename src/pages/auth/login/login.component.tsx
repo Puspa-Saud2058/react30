@@ -7,10 +7,14 @@ import { INPUT_TYPE } from "../../../components/common/form/input.contract";
 import { toast } from "react-toastify";
 import authSvc from "../auth.service";
 import { getCookie, setCookie } from "../../../utilities/helper";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../../../context/auth.context";
 
 
 const LoginPage = () => {
-    
+    const navigate=useNavigate();
+    const auth:any=useContext(AuthContext)
   const loginDTO = Yup.object({
     email: Yup.string()
       .email({ tlds: { allow: ["com"] } })
@@ -27,37 +31,12 @@ const LoginPage = () => {
   const loginAction = async (data: any) => {
     try {
       const response = await authSvc.postRequest("auth/login", data);
-      setCookie('_at',response.result.token.access,3)
-      console.log(getCookie('_at'));
-      //3 storage
-       //cookie
-         // string
-            // time dependent
-              //gets mature
-                 //self delete
-                   //eg.=>1 day >next deleted
-             // dependent on path and domain
-             //set maximum 50 cookie
-             //4096 chars
-           //document.cookie="name=value;expiresIn=timestamp;path=/admin;httpOnly=true;"
+      localStorage.setItem("_act",response.result.token.access)
+      localStorage.setItem("_rft",response.result.token.refresh)
+      toast.success("Welcome to"+response.result.userDetail.role+"panel !")
+      auth.setLoggedInUser(response.result.userDetail)
+      navigate("/"+response.result.userDetail.role)
 
-           //document.cookie="name=value;"; //session
-           //data={};
-           //cost cookie=document.cookie; //name=value;name2=value;
-           // ; => =["name=value","name2=value"]=>= =>"name=value"=>["name","value"]=>data[name]=value;
-       //localstorage
-      //permanent
-      //5 mb store
-      //independent of path
-      //localStorage.setItem('name','value')
-      //localStorage.getItme("name")
-      //localStorage.remoteItem("name")
-      //localStorage.clear()
-        //sessionstorage
-      //sessionstorage.setItem('name','value')
-      //sessionstorage.getItme("name")
-      //sessionstorage.remoteItem("name")
-      //sessionstorage.clear()
     } catch (exception) {
       console.error(exception);
       toast.error("Error while logging in your account!");

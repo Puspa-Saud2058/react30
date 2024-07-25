@@ -1,5 +1,7 @@
 import { Navbar,MegaMenu } from "flowbite-react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import AuthContext from "../../../context/auth.context";
 
 const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})=>{
   return(
@@ -11,6 +13,8 @@ const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})
   )
 }
 const Navbars=()=>{
+  const auth=useContext(AuthContext);
+  console.log(auth)
     return(
         <Navbar fluid  rounded className="bg-gray-200 h-20 py-5 border-gray-200">
         
