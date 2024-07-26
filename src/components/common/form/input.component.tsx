@@ -74,6 +74,7 @@ export const RoleSelector = ({
           >
             <option value="Customer">Buyer</option>
             <option value="seller">Seller</option>
+            <option value="admin">Admin</option>
           </select>
         )}
       />

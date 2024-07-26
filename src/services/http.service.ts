@@ -1,15 +1,22 @@
+import { toast } from "react-toastify";
 import axiosInstance from "../config/axios.config";
 abstract class HttpService {
   private headers = {};
   private params={};
   private getHeaders = (config: any) => {
     //auth,
-    if(config.auth){
+    if(config && config.auth){
       //headers
       //TODO:
+      let token=localStorage.getItem("_act")||null;
+      if(!token){
+        toast.error("Login first");
+        //redirect
+        document.location.href="/login";
+      }
       this.headers={
         ...this.headers,
-        "Authorization":"Bearer"
+        "Authorization":"Bearer"+token
       }
     }
     //content type
@@ -34,7 +41,7 @@ abstract class HttpService {
         headers: {...this.headers },   
         params:{...this.params}     
       });
-      console.log(response)
+      return response;
     } catch (exception) {
       console.error("PostRequestException:", exception);
       throw exception;

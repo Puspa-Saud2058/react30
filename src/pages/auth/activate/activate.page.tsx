@@ -17,14 +17,10 @@ const ActivationPage = () => {
       setMsg("Your account has been activated successfully.Please login to continue..")
     } catch (exception: any) {
       //handling
-      if (
-        +exception.status === 400 && exception.data.result && exception.data.result.hasOwnProperty('token') &&
-        exception.data.result.token === "expired"
-      )
+      if (+exception.status === 400 && exception.data.result && exception.data.result.hasOwnProperty('token') &&
+        exception.data.result.token === "expired")
        {
-        setMsg(
-          "Your token has been expired.Please confirm resending the token."
-        );
+        setMsg("Your token has been expired.Please confirm resending the token.");
         setIsExpired(true);
       }else{
         setMsg("Your account has been already activated.Please continue with login")

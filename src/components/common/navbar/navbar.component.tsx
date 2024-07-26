@@ -13,7 +13,7 @@ const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})
   )
 }
 const Navbars=()=>{
-  const auth=useContext(AuthContext);
+  const auth:any=useContext(AuthContext);
   console.log(auth)
     return(
         <Navbar fluid  rounded className="bg-gray-200 h-20 py-5 border-gray-200">
@@ -102,8 +102,15 @@ const Navbars=()=>{
           <LinkComponent link="/pricing" text="Pricing"/>
         </Navbar.Collapse>
         <Navbar.Collapse>
-        <LinkComponent link="/register" icon="&rarr;" text="Register"/>
-        <LinkComponent link="/login" icon="&rarr;" text="Login"/>
+      {
+        auth && auth.loggedInUser?<>
+           <LinkComponent link={"/"+auth.loggedInUser.role} icon="&rarr;" text={auth.loggedInUser.name}/>
+           <LinkComponent link="/login" icon="&rarr;" text="Logout"/>
+        </>:<>
+          <LinkComponent link="/register" icon="&rarr;" text="Register"/>
+          <LinkComponent link="/logout" icon="&rarr;" text="Login"/>
+          </>
+      }
         </Navbar.Collapse>
       </Navbar>
     )

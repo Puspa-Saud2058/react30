@@ -33,11 +33,13 @@ const RegisterPage = () => {
     setLoading(true)
     try {
      const response = await authSvc.postRequest("/auth/register", data, {file: true});
+     console.log(response)
      toast.success(response.message);
+     
       navigate('/login');
     } catch (exception: any) {
-      //handling
-      if (+exception.status === 422) {
+      console.log(exception)
+            if (+exception.status === 422) {
         //null
         Object.keys(exception.data.result).map((field: any) => {
           setError(field, {message:exception.data.result[field]});

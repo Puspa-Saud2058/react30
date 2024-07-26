@@ -33,7 +33,7 @@ const LoginPage = () => {
       const response = await authSvc.postRequest("auth/login", data);
       localStorage.setItem("_act",response.result.token.access)
       localStorage.setItem("_rft",response.result.token.refresh)
-      toast.success("Welcome to"+response.result.userDetail.role+"panel !")
+      toast.success("Welcome to "+response.result.userDetail.role+" panel !")
       auth.setLoggedInUser(response.result.userDetail)
       navigate("/"+response.result.userDetail.role)
 
