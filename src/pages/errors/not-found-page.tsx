@@ -1,4 +1,5 @@
-const NotFound = () => {
+import { NavLink } from "react-router-dom";
+const NotFound = ({url='/',redirectTxt='Go back'}:{url:string,redirectTxt:string}) => {
   return (
     <>
       <div className="grid h-screen place-content-center bg-white px-4">
@@ -28,9 +29,9 @@ const NotFound = () => {
 
           <p className="mt-4 text-gray-500">We can't find that page.</p>
           <p className="mt-5">
-            <a className="text-cyan-700" href="/">
-              Go back to home page
-            </a>
+            <NavLink className="text-cyan-700" to={url}>
+              {redirectTxt}
+            </NavLink>
           </p>
         </div>
       </div>

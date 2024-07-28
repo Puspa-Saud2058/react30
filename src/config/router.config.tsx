@@ -18,6 +18,7 @@ import AdminDashboard from "../pages/dashboard/admin-dashboard.component";
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import { AuthProvider } from "../context/auth.context";
 import AllowUser from "./permission-config";
+import { AdminBannerList } from "../pages/banner";
 
 const RouterConfig = () => {
   return (
@@ -36,19 +37,23 @@ const RouterConfig = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="/activate/:token" element={<ActivationPage/>} />
           <Route path="category/:slug" element={<CategoryDetailPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound url="/" redirectTxt="Go back to Home Page"/>} />
         </Route>
         <Route path="/admin" element={<AllowUser allowUser="admin">
                    <AdminPageLayout/>
                    </AllowUser>}>
         <Route index element={<AdminDashboard/>}></Route>
+        <Route path="banner" element={<AdminBannerList/>}></Route>
+        <Route path="*" element={<NotFound url="/admin" redirectTxt="Go back to Dashboard" />} />
         </Route>
-
+                
         <Route path="/seller" element={<AllowUser allowUser="seller">
         <AdminPageLayout/>
-        </AllowUser>}>         
-        </Route>
+        </AllowUser>}>  
         
+        <Route index element={<AdminDashboard/>}></Route>       
+        </Route>
+
       </Routes>
     </BrowserRouter>
     </>

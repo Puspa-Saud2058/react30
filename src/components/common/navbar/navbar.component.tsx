@@ -105,10 +105,10 @@ const Navbars=()=>{
       {
         auth && auth.loggedInUser?<>
            <LinkComponent link={"/"+auth.loggedInUser.role} icon="&rarr;" text={auth.loggedInUser.name}/>
-           <LinkComponent link="/login" icon="&rarr;" text="Logout"/>
+           <LinkComponent link="/logout" icon="&rarr;" text="Logout"/>
         </>:<>
           <LinkComponent link="/register" icon="&rarr;" text="Register"/>
-          <LinkComponent link="/logout" icon="&rarr;" text="Login"/>
+          <LinkComponent link="/login" icon="&rarr;" text="Login"/>
           </>
       }
         </Navbar.Collapse>

@@ -1,13 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import HomePageTitle from "../../../components/common/title/home-title.component";
 import LoadingComponent from "../../../components/common/loading/loading.component";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import authSvc from "../auth.service";
 import { Button } from "flowbite-react";
+import AuthContext from "../../../context/auth.context";
+import {toast} from "react-toastify";
 const ActivationPage = () => {
   const [loading, setLoading] = useState(true);
   let [msg, setMsg] = useState("");
   let [isExpired, setIsExpired] = useState(false);
+const navigate=useNavigate();
+
+const auth:any=useContext(AuthContext)
   const params = useParams();
 
   const getVerified = async () => {
@@ -47,6 +52,12 @@ const ActivationPage = () => {
   useEffect(() => {
     getVerified();
   }, []);
+  useEffect(()=>{
+    if(auth.loggedInUser){
+     toast.info("Your are already loggedIn.")
+     navigate("/"+auth.loggedInUser.role)
+    }
+ },[auth])
   //token url=>read
   //api call/auth/activate/token
   //success

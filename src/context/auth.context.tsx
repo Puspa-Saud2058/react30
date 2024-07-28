@@ -9,14 +9,23 @@ export const AuthProvider=({children}:{children:any})=>{
     let [loading,setLoading]=useState<boolean>();
 
     const getLoggedInUser=async()=>{
-        setLoading(false);
+        setLoading(true);
         try{
           const response:any=await authSvc.getRequest("/auth/me",{auth:true});
           setLoggedInUser(response.result)
           setLoading(false)
-        }catch(exception){
+        }catch(exception:any){
             //error
-            console.log(exception)
+            if(exception.status===401){
+                if(exception.data.message==="jwt expired"){
+                    //refresh token call =>
+                       //success localstorage _act=update,referesh token
+                         //reload=>navigate(0)
+                }
+                localStorage.removeItem("_act")
+                localStorage.removeItem("_rft")
+            }
+            setLoading(false);
         }
     }
     useEffect(()=>{

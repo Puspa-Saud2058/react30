@@ -2,13 +2,9 @@ import "flowbite";
 import AdminNavbarComponent from "../../components/common/navbar/admin-navbar.component";
 import AdminSidebarComponent from "../../components/sidebar/admin-sidebar.component";
 import { Outlet } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../context/auth.context";
 
 const AdminPageLayout = () => {
-  //check loggedin user//role=
-  const auth=useContext(AuthContext);
-  console.log(auth)
+
   return (<>
       <div className="antialiased bg-gray-50 dark:bg-gray-900">
         <AdminNavbarComponent />

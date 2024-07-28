@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import image from "../../../assests/image/image.jpeg";
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useContext, useState,useEffect } from "react";
 import {
   RoleSelector,
   TextAreaInputComponents,
@@ -14,11 +14,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import authSvc from "../auth.service";
 import {toast} from "react-toastify";
 import { GoogleLogin } from "@react-oauth/google";
+import AuthContext from "../../../context/auth.context";
 
 
 const RegisterPage = () => {
   const registrationDTO = authSvc.registerUserDto();
   const [loading,setLoading]=useState(false);
+  const auth:any=useContext(AuthContext);
+  const navigate =useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -28,7 +32,7 @@ const RegisterPage = () => {
   } = useForm({
     resolver: yupResolver(registrationDTO),
   });
-  const navigate=useNavigate();
+  
   const submitEvent = async (data: any) => {
     setLoading(true)
     try {
@@ -50,6 +54,12 @@ const RegisterPage = () => {
       setLoading(false);
     }
   };
+  useEffect(()=>{
+    if(auth.loggedInUser){
+     toast.info("Your are already loggedIn.")
+     navigate("/"+auth.loggedInUser.role)
+    }
+ },[auth])
   return (
     <>
       <section className="bg-white">

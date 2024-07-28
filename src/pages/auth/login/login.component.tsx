@@ -6,9 +6,9 @@ import { TextInputComponent } from "../../../components/common/form/input.compon
 import { INPUT_TYPE } from "../../../components/common/form/input.contract";
 import { toast } from "react-toastify";
 import authSvc from "../auth.service";
-import { getCookie, setCookie } from "../../../utilities/helper";
+// import { getCookie, setCookie } from "../../../utilities/helper";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "../../../context/auth.context";
 
 
@@ -42,6 +42,12 @@ const LoginPage = () => {
       toast.error("Error while logging in your account!");
     }
   };
+useEffect(()=>{
+   if(auth.loggedInUser){
+    toast.info("Your are already loggedIn.")
+    navigate("/"+auth.loggedInUser.role)
+   }
+},[auth])
   return (
     <>
       <div className="flex justify-center items-center mt-16 ">
