@@ -8,8 +8,7 @@ const AllowUser = ({allowUser,children}: {allowUser: string;children: any}) => {
   const auth:any = useContext(AuthContext);
   useEffect(() => {
     if (auth.loggedInUser) {
-      setLoading(false);
-      if (allowUser === auth.loggedInUser.role) {
+       if (allowUser === auth.loggedInUser.role) {
         setAccess(true);
       } else {
         setAccess(false);
@@ -22,12 +21,13 @@ const AllowUser = ({allowUser,children}: {allowUser: string;children: any}) => {
       loading?<>
       <LoadingComponent/>
       </>:<>{
-          giveAccess?<>{children}</>:<><NoPermision/></>
+          giveAccess?<>{children}</>:<>
+          <NoPermision/>
+          </>
       }
       </>
     }
-    </>
-  )
+    </> )
   
 }
 export default AllowUser;
