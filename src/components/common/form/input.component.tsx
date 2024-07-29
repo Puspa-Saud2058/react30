@@ -72,9 +72,9 @@ export const RoleSelector = ({
             onChange={onChange}
             className=" mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
           >
-            <option value="Customer">Customer</option>
+            <option value="Customer">Buyer</option>
             <option value="seller">Seller</option>
-            <option value="admin">Admin</option>
+            
             </select>
         )}
       />

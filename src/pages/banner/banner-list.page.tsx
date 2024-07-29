@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom"
 import { FaPlus } from "react-icons/fa6"
-import { Table } from "flowbite-react"
+import { useState } from "react"
+
 const AdminBannerList=()=>{
+    const [banner,setBanner]=useState<any>();
+    const [loading,setLoading]=useState
     return(
         <>
         <div className="my-5 border-b border-spacing-10 border-gray-700 flex justify-between">

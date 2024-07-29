@@ -1,16 +1,28 @@
-import { Table } from "flowbite-react";
+import { Table,Pagination } from "flowbite-react";
+import { useState } from "react";
 const BannerAdminTable=()=>{
+  const [paginationData, setPaginationData] = useState({
+    currentPage:1,
+    totalpages:1
+  });
+
+  const onPageChange = (page: number) => {
+    setPaginationData({
+      ...paginationData,
+      currentPage:page
+    })
+  }
     return(
         <>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto my-5">             
       <Table hoverable>
-        <Table.Head>
-          <Table.HeadCell>Product name</Table.HeadCell>
-          <Table.HeadCell>Color</Table.HeadCell>
-          <Table.HeadCell>Category</Table.HeadCell>
-          <Table.HeadCell>Price</Table.HeadCell>
+        <Table.Head >
+          <Table.HeadCell className="bg-slate-800 text-white py-3">Title</Table.HeadCell>
+          <Table.HeadCell className="bg-slate-800 text-white py-3">Link</Table.HeadCell>
+          <Table.HeadCell className="bg-slate-800 text-white py-3">Status</Table.HeadCell>
+          <Table.HeadCell className="bg-slate-800 text-white py-3">Image</Table.HeadCell>
           <Table.HeadCell>
-            <span className="sr-only">Edit</span>
+            Actions
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
@@ -27,32 +39,13 @@ const BannerAdminTable=()=>{
               </a>
             </Table.Cell>
           </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-              Microsoft Surface Pro
-            </Table.Cell>
-            <Table.Cell>White</Table.Cell>
-            <Table.Cell>Laptop PC</Table.Cell>
-            <Table.Cell>$1999</Table.Cell>
-            <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">Magic Mouse 2</Table.Cell>
-            <Table.Cell>Black</Table.Cell>
-            <Table.Cell>Accessories</Table.Cell>
-            <Table.Cell>$99</Table.Cell>
-            <Table.Cell>
-              <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                Edit
-              </a>
-            </Table.Cell>
-          </Table.Row>
+        
         </Table.Body>
       </Table>
+
+      <div className="flex overflow-x-auto sm:justify-end">
+      <Pagination currentPage={paginationData.currentPage} totalPages={paginationData.totalpages} onPageChange={onPageChange} />
+    </div>
     </div>
         </>
     )
