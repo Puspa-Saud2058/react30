@@ -8,25 +8,29 @@ import { INPUT_TYPE } from "../../components/common/form/input.contract";
 const AdminBannerCreate=()=>{
     const bannerDTO=Yup.object({
         name:Yup.string().min(2).required(),
-        status:Yup.string().matches(/^(active|inactive)$/).required(),
+        status:Yup.object({
+            label:Yup.string().required(),
+            value:Yup.string().required()
+        }).required(),
         link:Yup.string().url(),
         image:Yup.mixed().required()
     })
 const [loading,setLoading]=useState<boolean>()
 
-    const {control,setValue,handleSubmit,setError,formState:{errors}}=useForm({
+    const {control,setValue,handleSubmit,formState:{errors}}=useForm({
         resolver:yupResolver(bannerDTO)
     })
     const submitEvent=(data:any)=>{
         setLoading(true);
         console.log(data);
+    
     }
     return (
         <>
         <section className="bg-white dark:bg-gray-900">
   <div className="py-8 px-4 mx-auto  lg:py-12">
       <h2 className="mb-8 text-2xl font-semibold text-gray-900 dark:text-white">Add a new Banner</h2>
-      <form action="#">
+      <form onSubmit={handleSubmit(submitEvent)}>
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
               <div className="sm:col-span-2">
                  <InputLabel htmlFor="name"> Name: </InputLabel>
@@ -65,8 +69,8 @@ const [loading,setLoading]=useState<boolean>()
            
              
           </div>
-          <CancelButton loading={loading} btnTxt="Cancel"></CancelButton>
-       <SubmitButton loading={loading} btnTxt="Add Banner"></SubmitButton>
+          <CancelButton loading={loading as boolean} btnTxt="Cancel"></CancelButton>
+       <SubmitButton loading={loading as boolean} btnTxt="Add Banner"></SubmitButton>
        
       </form>
   </div>

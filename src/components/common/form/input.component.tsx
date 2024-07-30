@@ -4,6 +4,7 @@ import { INPUT_TYPE, ITextInputComponent,ISelectProps, IFileInputComponent } fro
 import Select from "react-select";
 import { FaPaperPlane } from "react-icons/fa6";
 import { FaUndo } from "react-icons/fa";
+import { useState } from "react";
 export const TextInputComponent = ({
   type = INPUT_TYPE.TEXT,
   defaultValue = "",
@@ -118,10 +119,13 @@ export const StatusSelector=({control,name,defaultValue,msg}:ITextInputComponent
 }
 
 export const SingleImageUpload=({name,setValue,msg}:IFileInputComponent)=>{
+  const [thumb,setThumb]=useState();
   return(
     <>
-      <input
-                    className="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+<div className="flex flex-roe ">
+<div className="w-3/4 me-3">
+<input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     id={name}
                     type="file"
                     name={name}
@@ -131,8 +135,15 @@ export const SingleImageUpload=({name,setValue,msg}:IFileInputComponent)=>{
                       const name = e.target.name;
                       const image = e.target.files[0];
                       setValue(name, image);
+                      setThumb(image);
                     }}
                   />
+</div>
+                 <div className="w-1/4">
+                 <img className="w-full" src={thumb && typeof thumb==='object' ? URL.createObjectURL(thumb) :'https://placehold.co/400x150?text=Image+not+found'} alt="Image"/>
+
+                 </div>
+</div>
                   <span className="text-sm italic text-red-700">
                     {msg as string}
                   </span>
