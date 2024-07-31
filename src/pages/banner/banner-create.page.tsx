@@ -5,6 +5,9 @@ import * as Yup from "yup";
 import { InputLabel } from "../../components/common/form/label.component";
 import { CancelButton, SingleImageUpload, StatusSelector, SubmitButton, TextInputComponent } from "../../components/common/form/input.component";
 import { INPUT_TYPE } from "../../components/common/form/input.contract";
+import {toast} from "react-toastify";
+import bannerSvc from "./banner.service";
+import { useNavigate } from "react-router-dom";
 const AdminBannerCreate=()=>{
     const bannerDTO=Yup.object({
         name:Yup.string().min(2).required(),
@@ -20,9 +23,24 @@ const [loading,setLoading]=useState<boolean>()
     const {control,setValue,handleSubmit,formState:{errors}}=useForm({
         resolver:yupResolver(bannerDTO)
     })
-    const submitEvent=(data:any)=>{
+    const navigate=useNavigate();
+    const submitEvent=async(data:any)=>{
         setLoading(true);
-        console.log(data);
+        try{
+            const submitData={
+                ...data,
+                status:data.status.value
+            }
+            await bannerSvc.postRequest('/banner',submitData,{auth:true,file:true})
+            toast.success("Banner created successfully.");
+            navigate("/admin/banner")
+
+        }catch(exception){
+            console.log(exception);
+            toast.error("Banner cannot be added at this moment.")
+        }finally{
+            setLoading(false)
+        }
     
     }
     return (

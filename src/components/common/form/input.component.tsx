@@ -157,7 +157,7 @@ export const SubmitButton=({btnTxt,loading=false}:{btnTxt:String,loading:boolean
        <button 
        type="submit" 
        disabled={loading}
-       className="mx-3 inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white  rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800">
+       className="me-3 inline-flex items-center disabled:cursor-not-allowed disabled:bg-teal-700/20 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white  rounded-lg focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-900 hover:bg-teal-800">
               <FaPaperPlane className="me-3"></FaPaperPlane>
               {btnTxt}
           </button>
@@ -171,7 +171,7 @@ export const CancelButton=({btnTxt,loading=false}:{btnTxt:String,loading:boolean
        <button 
        type="reset" 
        disabled={loading}
-       className="me-3 inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white  rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
+       className="me-3 inline-flex items-center  disabled:cursor-not-allowed disabled:bg-red-700/20 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white  rounded-lg focus:ring-4 focus:ring-red-200 dark:focus:ring-red-900 hover:bg-red-800">
               <FaUndo className="me-3"></FaUndo>
               {btnTxt}
           </button>
