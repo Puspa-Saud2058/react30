@@ -62,7 +62,19 @@ abstract class HttpService {
   };
   putRequest = async (url: string, data: any = {}, config: any = null) => {};
   patchRequest = async (url: string, data: any = {}, config: any = null) => {};
-  deleteRequest = async (url: string, config: any = null) => {};
+  deleteRequest = async (url: string, config: any = null) => {
+    try{
+      this.getHeaders(config);
+      const response=await axiosInstance.delete(url,{
+       headers:{...this.headers},
+       params:{...this.params}
+      })
+      return response
+     }catch(exception){
+       console.log("DeleteRequestException",exception)
+       throw exception
+     }
+  };
 }
 
 export default HttpService;

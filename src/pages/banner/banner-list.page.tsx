@@ -1,6 +1,6 @@
 import { FaPlus } from "react-icons/fa6"
 import { NavLink } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Table,Pagination,TextInput,Badge } from "flowbite-react";
 import { FaSearch } from "react-icons/fa";
 import { TableRowSkeleton } from "../../components/common/table/skeleton.component";
@@ -27,7 +27,7 @@ const AdminBannerList=()=>{
             search:null
         })
       }
-      const loadAllbanners=async({currentPage=1,limit=10,search=''}:{currentPage:number,limit?:number,search?:string|null})=>{
+      const loadAllbanners=useCallback(async({currentPage=1,limit=10,search=''}:{currentPage:number,limit?:number,search?:string|null})=>{
         setLoading(true);
         try{
           const response:any=await bannerSvc.getRequest("/banner",{auth:true,params:{limit:limit,page:currentPage,search:search}})
@@ -44,7 +44,7 @@ const AdminBannerList=()=>{
         }finally{
             setLoading(false)
         }
-      }
+      },[paginationData,keyword])
   useEffect(()=>{
        loadAllbanners({
         currentPage:1,
@@ -69,6 +69,22 @@ const AdminBannerList=()=>{
         clearTimeout(handler);
     }
   },[keyword])
+
+  const deleteData=useCallback(async(id:string)=>{
+      try{
+        setLoading(true)
+        await bannerSvc.deleteRequest('/banner/'+id,{auth:true})
+        toast.success("Banner Deleted successfully")
+        loadAllbanners({
+          currentPage:1,
+          limit:10
+        })
+        setLoading(false);
+
+      }catch(exception){
+        toast.error("Banner cannot be deleted at this moment")
+      }
+  },[])
     return(
         <>
         <div className="my-5 border-b border-spacing-10 border-gray-700 flex justify-between">
@@ -124,7 +140,12 @@ const AdminBannerList=()=>{
                <img src={import.meta.env.VITE_IMAGE_URL+'banner/'+row.image} className="max-w-24"/>
             </Table.Cell>
             <Table.Cell className="flex">
-              <TableActionButton/>
+
+              <TableActionButton 
+              deleteAction={deleteData}
+              id={row._id}
+              />
+            
             </Table.Cell>
           </Table.Row> 
                 ))
