@@ -6,7 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import { TableRowSkeleton } from "../../components/common/table/skeleton.component";
 import {toast} from "react-toastify";
 import bannerSvc from "./banner.service";
-import { FaPen,FaTrash } from "react-icons/fa6";
+import TableActionButton from "../../components/common/table/action-buttons.component"
 const AdminBannerList=()=>{
     const [paginationData, setPaginationData] = useState({
         currentPage:1,
@@ -75,7 +75,7 @@ const AdminBannerList=()=>{
             <h1 className="text-3xl font-semibold py-3">
                 Banner List Page
             </h1>
-            <NavLink to={'admin/banner/create'} className={"flex text-center  bg-teal-700 px-5 py-3 text-white rounded-md mb-3"}>
+            <NavLink to={'/admin/banner/create'} className={"flex text-center  bg-teal-700 px-5 py-3 text-white rounded-md mb-3"}>
              <FaPlus /> Add Banner
             </NavLink>
         </div>
@@ -94,7 +94,7 @@ const AdminBannerList=()=>{
           <Table.HeadCell className="bg-slate-800 text-white py-3">Link</Table.HeadCell>
           <Table.HeadCell className="bg-slate-800 text-white py-3">Status</Table.HeadCell>
           <Table.HeadCell className="bg-slate-800 text-white py-3">Image</Table.HeadCell>
-          <Table.HeadCell>
+          <Table.HeadCell className="bg-slate-800 text-white">
             Actions
           </Table.HeadCell>
         </Table.Head>
@@ -105,7 +105,7 @@ const AdminBannerList=()=>{
           </>:(
             banner ?<>
             {
-                banner.map((row:any,index:number)=>{
+                banner.map((row:any,index:number)=>(
             <Table.Row key={index} className="bg-white dark:border-gray-700 dark:bg-gray-800">
             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
             {row.name}
@@ -124,16 +124,11 @@ const AdminBannerList=()=>{
                <img src={import.meta.env.VITE_IMAGE_URL+'banner/'+row.image} className="max-w-24"/>
             </Table.Cell>
             <Table.Cell className="flex">
-              <a href="#" className="me-3 font-medium rounded-full h-8 w-8 bg-teal-600 text-white text-center p-2">
-                <FaPen></FaPen>
-              </a>
-              <a href="#" className="me-3 font-medium rounded-full h-8 w-8 bg-red-600 text-white text-center p-2">
-                <FaTrash></FaTrash>
-              </a>
+              <TableActionButton/>
             </Table.Cell>
           </Table.Row> 
-                })
-            }
+                ))
+              }
                
           </>:<>
           Add some data

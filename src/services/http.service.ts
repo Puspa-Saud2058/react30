@@ -16,7 +16,7 @@ abstract class HttpService {
       }
       this.headers={
         ...this.headers,
-        "Authorization":"Bearer"+token
+        "Authorization":"Bearer "+token
       }
     }
     //content type
