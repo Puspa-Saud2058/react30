@@ -22,7 +22,8 @@ export interface IFileInputComponent{
    
     name:string,
     setValue:any,
-    msg?:string|undefined|null
+    msg?:string|undefined|null,
+    imageUrl?:string|undefined|null
 }
 export interface SelectOption{
 label:string,

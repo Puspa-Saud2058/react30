@@ -60,8 +60,33 @@ abstract class HttpService {
       throw exception
     }
   };
-  putRequest = async (url: string, data: any = {}, config: any = null) => {};
-  patchRequest = async (url: string, data: any = {}, config: any = null) => {};
+  putRequest = async (url: string, data: any = {}, config: any = null) => {
+    try {
+      this.getHeaders(config);
+      const response = await axiosInstance.put(url, data, {
+        headers: {...this.headers },   
+        params:{...this.params}     
+      });
+      return response;
+    } catch (exception) {
+      console.error("PutRequestException:", exception);
+      throw exception;
+    }
+  };
+  patchRequest = async (url: string, data: any = {}, config: any = null) => {
+    try {
+      this.getHeaders(config);
+      const response = await axiosInstance.patch(url, data, {
+        headers: {...this.headers },   
+        params:{...this.params}     
+      });
+      return response;
+    } catch (exception) {
+      console.error("PatchRequestException:", exception);
+      throw exception;
+    }
+
+  };
   deleteRequest = async (url: string, config: any = null) => {
     try{
       this.getHeaders(config);

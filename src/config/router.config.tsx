@@ -18,7 +18,7 @@ import AdminDashboard from "../pages/dashboard/admin-dashboard.component";
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import { AuthProvider } from "../context/auth.context";
 import AllowUser from "./permission-config";
-import { AdminBannerList,AdminBannerCreate } from "../pages/banner";
+import { AdminBannerList,AdminBannerCreate,AdminBannerEdit } from "../pages/banner";
 
 const RouterConfig = () => {
   return (
@@ -45,6 +45,7 @@ const RouterConfig = () => {
         <Route index element={<AdminDashboard/>}></Route>
         <Route path="banner" element={<AdminBannerList/>}></Route>
         <Route path="banner/create" element={<AdminBannerCreate/>}></Route>
+        <Route path="banner/:id/edit" element={<AdminBannerEdit/>}> </Route>
         <Route path="*" element={<NotFound url="/admin" redirectTxt="Go back to Dashboard" />} />
         </Route>
                 

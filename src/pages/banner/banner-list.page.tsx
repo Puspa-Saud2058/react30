@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import bannerSvc from "./banner.service";
 import TableActionButton from "../../components/common/table/action-buttons.component"
 const AdminBannerList=()=>{
+
     const [paginationData, setPaginationData] = useState({
         currentPage:1,
         totalpages:1
@@ -62,7 +63,8 @@ const AdminBannerList=()=>{
     const handler=setTimeout(()=>{
         loadAllbanners({
             currentPage:1,
-            limit:10
+            limit:10,
+            search:keyword
            })
     },1000)
     return()=>{
@@ -85,7 +87,9 @@ const AdminBannerList=()=>{
         toast.error("Banner cannot be deleted at this moment")
       }
   },[])
+
     return(
+      
         <>
         <div className="my-5 border-b border-spacing-10 border-gray-700 flex justify-between">
             <h1 className="text-3xl font-semibold py-3">
@@ -144,6 +148,7 @@ const AdminBannerList=()=>{
               <TableActionButton 
               deleteAction={deleteData}
               id={row._id}
+              editUrl={'/admin/banner/'+row._id+'/edit'}
               />
             
             </Table.Cell>

@@ -1,6 +1,7 @@
 import { FaTrash,FaPen } from "react-icons/fa6"
-import Swal from "sweetalert2"
-const TableActionButton=({deleteAction,id}:{deleteAction:any,id:string})=>{
+import Swal from "sweetalert2";
+import { NavLink } from "react-router-dom";
+const TableActionButton=({deleteAction,id,editUrl}:{deleteAction:any,id:string,editUrl:string})=>{
     const handleDelete=async(e:any)=>{
         e.preventDefault()
       try{
@@ -22,12 +23,12 @@ const TableActionButton=({deleteAction,id}:{deleteAction:any,id:string})=>{
     }
     return(
         <>
-<a href="#" className="me-3 font-medium rounded-full h-8 w-8 bg-teal-600 text-white text-center p-2">
+             <NavLink  to={editUrl} className="me-3 font-medium rounded-full h-8 w-8 bg-teal-600 text-white text-center p-2">
                 <FaPen></FaPen>
-              </a>
-              <a onClick={handleDelete} href="#" className="me-3 font-medium rounded-full h-8 w-8 bg-red-600 text-white text-center p-2">
+              </NavLink>
+              <NavLink onClick={handleDelete} to="/" className="me-3 font-medium rounded-full h-8 w-8 bg-red-600 text-white text-center p-2">
                 <FaTrash></FaTrash>
-              </a>
+              </NavLink>
         </>
     )
 }

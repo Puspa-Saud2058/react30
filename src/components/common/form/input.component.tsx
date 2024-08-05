@@ -118,7 +118,7 @@ export const StatusSelector=({control,name,defaultValue,msg}:ITextInputComponent
   </>)
 }
 
-export const SingleImageUpload=({name,setValue,msg}:IFileInputComponent)=>{
+export const SingleImageUpload=({name,setValue,msg,imageUrl=null}:IFileInputComponent)=>{
   const [thumb,setThumb]=useState();
   return(
     <>
@@ -140,7 +140,7 @@ export const SingleImageUpload=({name,setValue,msg}:IFileInputComponent)=>{
                   />
 </div>
                  <div className="w-1/4">
-                 <img className="w-full" src={thumb && typeof thumb==='object' ? URL.createObjectURL(thumb) :'https://placehold.co/400x150?text=Image+not+found'} alt="Image"/>
+                 <img className="w-full" src={thumb && typeof thumb==='object' ? URL.createObjectURL(thumb) :(imageUrl&& typeof imageUrl==='string'? imageUrl:'https://placehold.co/400x150?text=Image+not+found')} alt="Image"/>
 
                  </div>
 </div>
