@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../../context/auth.context";
 import { useDispatch } from "react-redux";
+import { setLoggedInUser } from "../../../reducer/auth.reducer";
 
 
 const LoginPage = () => {
@@ -36,8 +37,8 @@ const LoginPage = () => {
       localStorage.setItem("_act",response.result.token.access)
       localStorage.setItem("_rft",response.result.token.refresh)
       toast.success("Welcome to "+response.result.userDetail.role+" panel !")
-      auth.setLoggedInUser(response.result.userDetail)
-      //dispatch(setLoggedInUser(response.result.userDetail));
+      auth.setLoggedInUser(response.result.userDetail);
+      dispatch(setLoggedInUser(response.result.userDetail));
       navigate("/"+response.result.userDetail.role)
 
     } catch (exception) {

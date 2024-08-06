@@ -14,10 +14,10 @@ const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})
   )
 }
 const Navbars=()=>{
- const auth:any=useContext(AuthContext);
-  // const auth=useSelector((root:any)=>{
-  //   return root.auth.loggedInUser ||null;
-  // })
+ //const auth:any=useContext(AuthContext);
+   const auth:any=useSelector((root:any)=>{
+     return root.auth.loggedInUser ||null;
+   })
 
 
     return(
@@ -108,8 +108,8 @@ const Navbars=()=>{
         </Navbar.Collapse>
         <Navbar.Collapse>
       {
-        auth && auth.loggedInUser?<>
-           <LinkComponent link={"/"+auth.loggedInUser.role} icon="&rarr;" text={auth.loggedInUser.name}/>
+        auth && auth ?<>
+           <LinkComponent link={"/"+auth.role} icon="&rarr;" text={auth.name}/>
            <LinkComponent link="/logout" icon="&rarr;" text="Logout"/>
         </>:<>
           <LinkComponent link="/register" icon="&rarr;" text="Register"/>

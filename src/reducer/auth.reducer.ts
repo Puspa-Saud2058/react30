@@ -1,4 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import authSvc from "../pages/auth/auth.service";
+
+export const getLoggedInUserFromReducer:any=createAsyncThunk(
+    "User/getLoggedInUserFromReducer",
+    async()=>{
+        try{
+         const response:any= await authSvc.getRequest('auth/me',{auth:true});
+         return response.result;
+        }catch(exception){
+            throw exception
+        }
+    }
+)
 
 const UserSlicer=createSlice({
     name:"User",
@@ -7,12 +20,19 @@ const UserSlicer=createSlice({
     },
     reducers:{
         setLoggedInUser:(state,action)=>{
+            //name/reducernmae
+            //for eg. user/loggedinuser
             state.loggedInUser=action.payload
-            //action:{type:"",payload:any}
-              //type:"User/setLoggedInUser"
-                //payload:args
-            //state:loggedInUser    
+          
         }
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(getLoggedInUserFromReducer.fulfilled, (state,action)=>{
+            state.loggedInUser=action.payload
+        })
+        builder.addCase(getLoggedInUserFromReducer.rejected,(state)=>{
+            state.loggedInUser=null
+        })
     }
 })
 
