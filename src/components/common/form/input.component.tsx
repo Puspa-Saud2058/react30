@@ -108,7 +108,7 @@ export const StatusSelector=({control,name,defaultValue,msg}:ITextInputComponent
 
   return (<>
      <SelectComponent 
-     options={[{label:"Publish",value:"active"},{label:"Unpublish",value:"iactive"}]}
+     options={[{label:"Publish",value:"active"},{label:"Unpublish",value:"inactive"}]}
       control={control}
       name={name}
       defaultValue={defaultValue}

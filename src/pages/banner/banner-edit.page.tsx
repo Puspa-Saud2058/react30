@@ -34,7 +34,8 @@ const [loading,setLoading]=useState<boolean>(true)
         const response:any=await bannerSvc.getRequest('/banner/'+params.id,{auth:true})
         let bannerDetail={
             ...response.result,
-            image: import.meta.env.VITE_IMAGE_URL+"banner"+ response.result.image
+            image: import.meta.env.VITE_IMAGE_URL+"banner/"+response.result.image
+
             
          }
         setDetail(bannerDetail)
