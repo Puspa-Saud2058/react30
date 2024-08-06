@@ -10,10 +10,12 @@ import authSvc from "../auth.service";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../../context/auth.context";
+import { useDispatch } from "react-redux";
 
 
 const LoginPage = () => {
     const navigate=useNavigate();
+    const dispatch=useDispatch();
     const auth:any=useContext(AuthContext)
   const loginDTO = Yup.object({
     email: Yup.string()
@@ -35,6 +37,7 @@ const LoginPage = () => {
       localStorage.setItem("_rft",response.result.token.refresh)
       toast.success("Welcome to "+response.result.userDetail.role+" panel !")
       auth.setLoggedInUser(response.result.userDetail)
+      //dispatch(setLoggedInUser(response.result.userDetail));
       navigate("/"+response.result.userDetail.role)
 
     } catch (exception) {

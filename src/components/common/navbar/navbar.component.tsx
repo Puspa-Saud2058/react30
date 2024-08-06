@@ -2,6 +2,7 @@ import { Navbar,MegaMenu } from "flowbite-react";
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../../context/auth.context";
+import { useSelector } from "react-redux";
 
 const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})=>{
   return(
@@ -13,8 +14,12 @@ const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})
   )
 }
 const Navbars=()=>{
-  const auth:any=useContext(AuthContext);
-  console.log(auth)
+ const auth:any=useContext(AuthContext);
+  // const auth=useSelector((root:any)=>{
+  //   return root.auth.loggedInUser ||null;
+  // })
+
+
     return(
         <Navbar fluid  rounded className="bg-gray-200 h-20 py-5 border-gray-200">
         

@@ -20,10 +20,19 @@ import { AuthProvider } from "../context/auth.context";
 import AllowUser from "./permission-config";
 import { AdminBannerList,AdminBannerCreate,AdminBannerEdit } from "../pages/banner";
 import { AdminBrandList,AdminBrandCreate,AdminBrandEdit } from "../pages/brand";
+import {useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setLoggedInUser } from "../reducer/auth.reducer";
 const RouterConfig = () => {
+  const dispatch=useDispatch();
+  useEffect(()=>{
+    dispatch(setLoggedInUser("Hello there"))
+  },[])
+  
   return (
     <>
  <GoogleOAuthProvider clientId="983346421278-m6oju1bpo115p7um94rfdgkj7amgubp7.apps.googleusercontent.com">
+   
     <AuthProvider>
       <>
     <ToastContainer
@@ -66,6 +75,7 @@ const RouterConfig = () => {
     </BrowserRouter>
     </>
     </AuthProvider>
+   
     </GoogleOAuthProvider>
     </>
   );
