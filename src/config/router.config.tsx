@@ -24,6 +24,7 @@ import {useDispatch } from "react-redux";
 import { useEffect,useState } from "react";
 import { getLoggedInUserFromReducer } from "../reducer/auth.reducer";
 import LoadingComponent from "../components/common/loading/loading.component";
+import ChatListView from "../pages/chat/chat.page";
 
 const RouterConfig = () => {
   const dispatch=useDispatch();
@@ -58,6 +59,8 @@ const RouterConfig = () => {
          <Route path="login" element={<LoginPage />} />
          <Route path="/activate/:token" element={<ActivationPage/>} />
          <Route path="category/:slug" element={<CategoryDetailPage />} />
+         <Route path="chat" element={<ChatListView />} />
+
          <Route path="*" element={<NotFound url="/" redirectTxt="Go back to Home Page"/>} />
        </Route>
        <Route path="/admin" element={<AllowUser allowUser="admin">

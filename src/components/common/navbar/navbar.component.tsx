@@ -4,12 +4,13 @@ import { NavLink } from "react-router-dom";
 import AuthContext from "../../../context/auth.context";
 import { useSelector } from "react-redux";
 import { useGetLoggedInUserQuery } from "../../../pages/auth/auth.Api";
+import { FaMessage } from "react-icons/fa6";
 
 
-const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})=>{
+const LinkComponent=({text,icon="",link}:{text:string,icon?:string|any,link:string})=>{
   return(
     <>
-      <NavLink to={link} className={({isActive}:{isActive:boolean})=>isActive?'text-cyan-800':'text-gray-700'+"hover:text-cyan-700"}>
+      <NavLink to={link} className={({isActive}:{isActive:boolean})=>isActive?'text-cyan-800':'text-gray-700'+"hover:text-cyan-700 flex"}>
             {text} {icon}
           </NavLink>
     </>
@@ -22,8 +23,8 @@ const Navbars=()=>{
 
  if(isLoading) return <>Loading</>
  if(isError) return <>Error</>
- 
- let auth=data.result;
+
+ let auth=data?.result;
   //  const auth:any=useSelector((root:any)=>{
   //    return root.auth.loggedInUser ||null;
   //  })
@@ -118,6 +119,7 @@ const Navbars=()=>{
         <Navbar.Collapse>
       {
         auth && auth ?<>
+           <LinkComponent link={"/chat"} icon={<FaMessage className="ms-3 mt-1 text-blue-500"/>} text={"Chat"}/>
            <LinkComponent link={"/"+auth.role} icon="&rarr;" text={auth.name}/>
            <LinkComponent link="/logout" icon="&rarr;" text="Logout"/>
         </>:<>
