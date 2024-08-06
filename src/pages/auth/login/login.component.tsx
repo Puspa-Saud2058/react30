@@ -12,12 +12,18 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../../../context/auth.context";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "../../../reducer/auth.reducer";
+import { useLoginMutation } from "../auth.Api";
 
 
 const LoginPage = () => {
     const navigate=useNavigate();
     const dispatch=useDispatch();
+ 
+    const [login,{isLoading}]=useLoginMutation();
+    
+   
     const auth:any=useContext(AuthContext)
+
   const loginDTO = Yup.object({
     email: Yup.string()
       .email({ tlds: { allow: ["com"] } })
@@ -33,13 +39,15 @@ const LoginPage = () => {
   });
   const loginAction = async (data: any) => {
     try {
-      const response = await authSvc.postRequest("auth/login", data);
-      localStorage.setItem("_act",response.result.token.access)
-      localStorage.setItem("_rft",response.result.token.refresh)
-      toast.success("Welcome to "+response.result.userDetail.role+" panel !")
-      auth.setLoggedInUser(response.result.userDetail);
-      dispatch(setLoggedInUser(response.result.userDetail));
-      navigate("/"+response.result.userDetail.role)
+      const response=await login(data).unwrap();
+      
+      // const response = await authSvc.postRequest("auth/login", data);
+       localStorage.setItem("_act",response.result.token.access)
+       localStorage.setItem("_rft",response.result.token.refresh)
+       toast.success("Welcome to "+response.result.userDetail.role+" panel !")
+       auth.setLoggedInUser(response.result.userDetail);
+       dispatch(setLoggedInUser(response.result.userDetail));
+       navigate("/"+response.result.userDetail.role)
 
     } catch (exception) {
       console.error(exception);

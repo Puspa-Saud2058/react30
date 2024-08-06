@@ -3,6 +3,8 @@ import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../../context/auth.context";
 import { useSelector } from "react-redux";
+import { useGetLoggedInUserQuery } from "../../../pages/auth/auth.Api";
+
 
 const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})=>{
   return(
@@ -15,9 +17,16 @@ const LinkComponent=({text,icon="",link}:{text:string,icon?:string,link:string})
 }
 const Navbars=()=>{
  //const auth:any=useContext(AuthContext);
-   const auth:any=useSelector((root:any)=>{
-     return root.auth.loggedInUser ||null;
-   })
+
+ const { data, isLoading, isError } = useGetLoggedInUserQuery();
+
+ if(isLoading) return <>Loading</>
+ if(isError) return <>Error</>
+ 
+ let auth=data.result;
+  //  const auth:any=useSelector((root:any)=>{
+  //    return root.auth.loggedInUser ||null;
+  //  })
 
 
     return(
