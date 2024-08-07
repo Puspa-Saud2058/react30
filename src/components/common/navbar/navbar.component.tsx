@@ -22,7 +22,7 @@ const Navbars=()=>{
  const { data, isLoading, isError } = useGetLoggedInUserQuery();
 
  if(isLoading) return <>Loading</>
- if(isError) return <>Error</>
+ //if(isError) return <>Error</>
 
  let auth=data?.result;
   //  const auth:any=useSelector((root:any)=>{

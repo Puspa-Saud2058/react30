@@ -2,6 +2,8 @@ import { useState, useEffect } from "react"
 import { toast } from "react-toastify";
 
 import { Card, Avatar } from "flowbite-react";
+import chatService from "./chat.service";
+import { useSelector } from "react-redux";
 
 export interface UserDetail {
     _id: string,
@@ -22,14 +24,18 @@ export interface SingleUser{
     name: string,
     email: string,
     image: string,
-    message: SingleMessage[]
+    message: SingleMessage[] 
 }
 
 export const ChatUserList = ({user}: {user: SingleUser}) => {
     return (<>
         <div className="flex pe-5 mb-5 mt-3 shadow-lg bg-gray-100 hover:bg-blue-50 hover:cursor-pointer">
             <div className="w-1/4 mx-3">
-                <img src={user.image} className="rounded-full mt-3" alt="" />
+                <img 
+                  onError={(e:any)=>{
+                    e.target.src= 'https://placehold.co/400x400'
+                  }}
+                src={user.image ? import.meta.env.VITE_IMAGE_URL+'/user/'+user.image:'https://placehold.co/400x400'} className="rounded-full mt-3" alt="" />
             </div>
             <div className=" py-5 ms-3">
                 <h1 className="bold">{user.name}</h1>
@@ -37,168 +43,25 @@ export const ChatUserList = ({user}: {user: SingleUser}) => {
                     {user.email}
                 </p>
                 <small className="text-xs italic text-gray-500">
-                    {user?.message[0].message}
+                    {user?.message[0]?.message}
                 </small>
             </div>
         </div>
     </>)
 }
 
-const messages = [
-    {
-        _id: "123",
-        sender: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        reciver: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        date: new Date(),
-        message: "Hello"
-    },
-    {
-        _id: "1233",
-        sender: {
-            _id: "123",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        reciver: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        date: new Date(),
-        message: "Hello"
-    },
-    {
-        _id: "123",
-        sender: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        reciver: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        date: new Date(),
-        message: "Hello"
-    },
-    {
-        _id: "123",
-        sender: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        reciver: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        date: new Date(),
-        message: "Hello"
-    },
-    {
-        _id: "123",
-        sender: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        reciver: {
-            _id: "1234",
-            name: "User name",
-            email: "name@user.com",
-            image: "https://placehold.co/600x600",
-        },
-        date: new Date(),
-        message: "Hello"
-    }
-]
-
-const currentUser = {
-    _id: "1234",
-    name: "User name",
-    email: "name@user.com",
-    image: "https://placehold.co/600x600",
-}
 
 const ChatListView = () => {
     const [userList, setUserList] = useState<SingleUser[]>();
-
+     const currentUser=useSelector((root:any)=>{
+            return root.auth.loggedInUser || null;
+     })
+     const [messages,setMessages]=useState<any>([]);
     // load all users 
     const loadAllUsers =async () => {
         try {
-            const response: SingleUser[] = [
-                {
-                    _id: "123",
-                    name: "User name",
-                    email: "name@user.com",
-                    image: "https://placehold.co/600x600",
-                    message: [
-                        {
-                            _id: "123123",
-                            sender: {
-                                _id: "1234",
-                                name: "User one",
-                                email: "one@user.com",
-                                image: "https://placehold.co/600x600",
-                            },
-                            reciver: {
-                                _id: "123",
-                                name: "User name",
-                                email: "name@user.com",
-                                image: "https://placehold.co/600x600",
-                            },
-                            date: "2024-08-07T09:00:00.123Z",
-                            message: "Hello"
-                        }
-                    ]
-                },
-                {
-                    _id: "123",
-                    name: "User Two",
-                    email: "two@user.com",
-                    image: "https://placehold.co/600x600",
-                    message: [
-                        {
-                            _id: "123123",
-                            sender: {
-                                _id: "1234",
-                                name: "User name",
-                                email: "name@user.com",
-                                image: "https://placehold.co/600x600",
-                            },
-                            reciver: {
-                                _id: "123",
-                                name: "User Two",
-                                email: "two@user.com",
-                                image: "https://placehold.co/600x600",
-                            },
-                            date: "2024-08-07T09:00:00.123Z",
-                            message: "Hello"
-                        }
-                    ]
-                },
-            ]
-
-            setUserList(response);
+           const response:any=await chatService.getRequest('chat/chat-list',{auth:true})
+            setUserList(response.result);
         } catch(exception) {
             toast.error("Error loading user list.")
         }
