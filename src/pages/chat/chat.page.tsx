@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Card, Avatar } from "flowbite-react";
 import chatService from "./chat.service";
 import { useSelector } from "react-redux";
+import socket from "../../config/socket.config";
 
 export interface UserDetail {
   _id: string;
@@ -93,6 +94,15 @@ const ChatListView = () => {
   };
   useEffect(() => {
     loadAllUsers();
+    const newMessageReceived=(data:any)=>{
+       if(data.receiver===currentUser._id){
+        getDetailChat(data.sender)
+       }
+    }
+   socket.on('message-received',newMessageReceived);
+   return()=>{
+    socket.off('message-received',newMessageReceived);
+   }
   }, []);
 
 
@@ -105,13 +115,23 @@ const ChatListView = () => {
         message:message
        }
        const response=await chatService.postRequest('chat/store',msg,{auth:true})
-       setCurrentMessage("")
+       setCurrentMessage(" ")
+       setCurrentChat({
+        ...currentChat,
+        list:[
+            ...currentChat.list,
+            response.result
+        ]
+       })
+       socket.emit('message-sent',{sender:currentUser._id,receiver:currentChat.sender._id})
+
   }catch(exception){
    toast.error("Error sending message");
   }
   }
   const getDetailChat = async (senderId: string) => {
     try {
+        socket.connect()
       const response: any = await chatService.getRequest(
         "/chat/chat-detail/" + senderId,
         { auth: true }
@@ -145,37 +165,37 @@ const ChatListView = () => {
             <Card>
               <div className="h-96 overflow-y-auto">
                 {currentChat &&
-                  currentChat.list.map((message: any, index: number) => (
+                  currentChat.list.map((messageDetail: any, index: number) => (
                     <div
                       key={index}
                       className={`flex items-start mb-4 ${
-                        message.sender._id === currentUser._id
+                        messageDetail.sender._id === currentUser._id
                           ? "justify-end"
                           : "justify-start"
                       }`}
                     >
-                      {message.sender._id !== currentUser._id && (
+                      {messageDetail.sender._id !== currentUser._id && (
                         <Avatar
-                          img={message.sender.image}
+                          img={messageDetail.sender.image}
                           rounded={true}
                           className="mr-2"
                         />
                       )}
                       <div
                         className={`rounded-lg px-4 py-2 ${
-                          message.sender._id === currentUser._id
+                          messageDetail.sender._id === currentUser._id
                             ? "bg-blue-500 text-white"
                             : "bg-gray-200 text-gray-900"
                         } max-w-xs`}
                       >
-                        <p>{message.message}</p>
+                        <p>{messageDetail.message}</p>
                         <small className="block mt-1 text-xs text-gray-600">
-                          {new Date(message.date).toLocaleTimeString()}
+                          {new Date(messageDetail.date).toLocaleTimeString()}
                         </small>
                       </div>
-                      {message.sender._id === currentUser._id && (
+                      {messageDetail.sender._id === currentUser._id && (
                         <Avatar
-                          img={message.sender.image}
+                          img={messageDetail.sender.image}
                           rounded={true}
                           className="ml-2"
                         />
